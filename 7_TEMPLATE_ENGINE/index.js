@@ -18,9 +18,11 @@ app.get('/', (req, res) => {
         age: "21",
     }
 
-    const auth = true
+    const auth = false
 
-    res.render('home', { user: user, auth})
+    const approved = true
+
+    res.render('home', { user: user, auth, approved})
 })
 
 app.listen(3000, () =>{
