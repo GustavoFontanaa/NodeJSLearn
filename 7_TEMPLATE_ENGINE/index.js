@@ -7,7 +7,14 @@ app.engine('handlebars', exphbs.engine())
 app.set('view engine', 'handlebars')
 
 app.get('/', (req, res) => {
-    res.render('home')
+
+    const user = {
+        name: "Gustavo",
+        surname: "Fontana",
+        age: "21",
+    }
+
+    res.render('home', { user: user})
 })
 
 app.listen(3000, () =>{
