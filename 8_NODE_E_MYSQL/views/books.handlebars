@@ -1,0 +1,20 @@
+<h1>Livros disponíveis:</h1>
+<div class="books-container">
+  <div class="text-box">
+    <a href="/" class="btn btn-green btn- animate">New book</a>
+  </div>
+  {{#each books}}
+    <div>
+      <table border="1" align="center">
+        <tbody>
+          <td class="fds">#{{this.id}}
+            -
+            <span class="bold">{{this.title}}</span>
+            -
+            {{this.pageqty}}
+            páginas</td>
+        </tbody>
+      </table>
+    </div>
+  {{/each}}
+</div>
