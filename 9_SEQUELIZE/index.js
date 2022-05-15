@@ -62,6 +62,20 @@ app.get("/", async (req, res) => {
     .catch((err) => console.log(err));
 });
 
+app.post('/users/delete/:id', async (req, res) => {
+  const id = req.params.id
+
+  await User.destroy({
+    where: {
+      id: id,
+    },
+  })
+    .then((user) => {
+      res.redirect('/')
+    })
+    .catch((err) => console.log(err))
+})
+
 // Criar tabelas e rodar o app
 conn
   .sync()
