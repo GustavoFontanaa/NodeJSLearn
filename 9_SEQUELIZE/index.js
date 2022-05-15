@@ -77,21 +77,25 @@ app.post("/users/delete/:id", async (req, res) => {
     .catch((err) => console.log(err));
 });
 
-app.get("/users/edit/:id", async (req, res) => {
-  const id = req.params.id;
+app.get('/users/edit/:id', async (req, res) => {
+  const id = req.params.id
 
-  await User.findOne({
-    raw: true,
-    where: {
-      id: id,
-    },
-  })
-    .then((user) => {
-      console.log(user);
-      res.render("useredit", { user });
+  try {
+    await User.findOne({
+      include: Address,
+      where: {
+        id: id,
+      },
     })
-    .catch((err) => console.log(err));
-});
+      .then((user) => {
+        res.render('useredit', { user: user.get({ plain: true }) })
+      })
+      .catch((err) => console.log(err))
+  } catch (error) {
+    console.log(error)
+  }
+  
+})
 
 app.post("/users/update", async (req, res) => {
   const id = req.body.id;
