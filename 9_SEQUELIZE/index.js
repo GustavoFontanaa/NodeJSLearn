@@ -1,54 +1,55 @@
-const express = require('express')
-const exphbs = require('express-handlebars')
-const conn = require('./db/conn')
+const express = require("express");
+const exphbs = require("express-handlebars");
+const conn = require("./db/conn");
 
-const User = require('./models/User')
+const User = require("./models/User");
 
-const app = express()
+const app = express();
 
-
-
-app.engine('handlebars', exphbs.engine())
-app.set('view engine', 'handlebars')
+app.engine("handlebars", exphbs.engine());
+app.set("view engine", "handlebars");
 
 app.use(
   express.urlencoded({
     extended: true,
-  }),
-)
+  })
+);
 
-app.use(express.json())
+app.use(express.json());
 
-app.use(express.static('public'))
+app.use(express.static("public"));
 
-app.get('/users/create', (req, res) => {
-  res.render('adduser')
-})
+app.get("/users/create", (req, res) => {
+  res.render("adduser");
+});
 
-app.post('/users/create', async (req, res) => {
-  const name = req.body.name
-  const occupation = req.body.occupation
-  let newsletter = req.body.newsletter
+app.post("/users/create", async (req, res) => {
+  const name = req.body.name;
+  const occupation = req.body.occupation;
+  let newsletter = req.body.newsletter;
 
-  if (newsletter === 'on') {
-    newsletter = true
-  } else [
-    newsletter = false
-  ]
+  if (newsletter === "on") {
+    newsletter = true;
+  } else [(newsletter = false)];
 
-  User.create({ name, occupation, newsletter })
+  await User.create({ name, occupation, newsletter });
 
-  res.redirect('/')
-})
+  res.redirect("/");
+});
 
-app.get('/', function (req, res) {
-  res.render('home')
-})
+app.get("/", async (req, res) => {
+  User.findAll({ raw: true })
+    .then((users) => {
+      console.log(users);
+      res.render("home", { users: users });
+    })
+    .catch((err) => console.log(err));
+});
 
 // Criar tabelas e rodar o app
 conn
   .sync()
   .then(() => {
-    app.listen(3000)
+    app.listen(3000);
   })
-  .catch((err) => console.log(err))
+  .catch((err) => console.log(err));
