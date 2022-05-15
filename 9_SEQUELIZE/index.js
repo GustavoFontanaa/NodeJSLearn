@@ -127,11 +127,31 @@ app.post("/users/update", async (req, res) => {
     .catch((err) => console.log(err));
 });
 
+app.post('/address/create', async (req, res) => {
+  const UserId = req.body.UserId
+  const street = req.body.street
+  const number = req.body.number
+  const city = req.body.city
+
+  const address = {
+    UserId,
+    street,
+    number,
+    city,
+  }
+
+  await Address.create(address)
+
+  res.redirect(`/users/edit/${UserId}`)
+})
+
 // Criar tabelas e rodar o app
 conn
-  //.sync()
-  .sync({ force: true })
+  .sync()
+  //.sync({ force: true }) --> apaga dados do banco
   .then(() => {
     app.listen(3000);
   })
   .catch((err) => console.log(err));
+
+ 
