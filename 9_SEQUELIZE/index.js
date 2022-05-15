@@ -3,6 +3,7 @@ const exphbs = require("express-handlebars");
 const conn = require("./db/conn");
 
 const User = require("./models/User");
+const Address = require("./models/Address");
 
 const app = express();
 
@@ -92,16 +93,16 @@ app.get("/users/edit/:id", async (req, res) => {
     .catch((err) => console.log(err));
 });
 
-app.post('/users/update', async (req, res) => {
-  const id = req.body.id
-  const name = req.body.name
-  const occupation = req.body.occupation
-  let newsletter = req.body.newsletter
+app.post("/users/update", async (req, res) => {
+  const id = req.body.id;
+  const name = req.body.name;
+  const occupation = req.body.occupation;
+  let newsletter = req.body.newsletter;
 
-  if (newsletter === 'on') {
-    newsletter = true
+  if (newsletter === "on") {
+    newsletter = true;
   } else {
-    newsletter = false
+    newsletter = false;
   }
 
   const userData = {
@@ -109,10 +110,10 @@ app.post('/users/update', async (req, res) => {
     name,
     occupation,
     newsletter,
-  }
+  };
 
-  console.log(req.body)
-  console.log(userData)
+  console.log(req.body);
+  console.log(userData);
 
   await User.update(userData, {
     where: {
@@ -120,16 +121,16 @@ app.post('/users/update', async (req, res) => {
     },
   })
     .then((user) => {
-      console.log(user)
-      res.redirect('/')
+      console.log(user);
+      res.redirect("/");
     })
-    .catch((err) => console.log(err))
-})
-
+    .catch((err) => console.log(err));
+});
 
 // Criar tabelas e rodar o app
 conn
-  .sync()
+  //.sync()
+  .sync({ force: true })
   .then(() => {
     app.listen(3000);
   })
