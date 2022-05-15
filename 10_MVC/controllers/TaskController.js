@@ -5,8 +5,11 @@ module.exports = class TaskController {
     res.render('tasks/create')
   }
 
-  static showTasks(req, res) {
-    res.render('tasks/all')
+  static async showTasks(req, res) {
+
+    const tasks = await Task.findAll({raw: true})
+
+    res.render('tasks/all', {tasks})
   }
 
   static async createTaskSave(req, res) {
