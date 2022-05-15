@@ -37,8 +37,8 @@ app.post("/users/create", async (req, res) => {
   res.redirect("/");
 });
 
-app.get('/users/:id', async (req, res) => {
-  const id = req.params.id
+app.get("/users/:id", async (req, res) => {
+  const id = req.params.id;
 
   User.findOne({
     raw: true,
@@ -47,11 +47,11 @@ app.get('/users/:id', async (req, res) => {
     },
   })
     .then((user) => {
-      console.log(user)
-      res.render('userview', { user })
+      console.log(user);
+      res.render("userview", { user });
     })
-    .catch((err) => console.log(err))
-})
+    .catch((err) => console.log(err));
+});
 
 app.get("/", async (req, res) => {
   const users = await User.findAll({ raw: true })
@@ -62,8 +62,8 @@ app.get("/", async (req, res) => {
     .catch((err) => console.log(err));
 });
 
-app.post('/users/delete/:id', async (req, res) => {
-  const id = req.params.id
+app.post("/users/delete/:id", async (req, res) => {
+  const id = req.params.id;
 
   await User.destroy({
     where: {
@@ -71,10 +71,26 @@ app.post('/users/delete/:id', async (req, res) => {
     },
   })
     .then((user) => {
-      res.redirect('/')
+      res.redirect("/");
     })
-    .catch((err) => console.log(err))
-})
+    .catch((err) => console.log(err));
+});
+
+app.get("/users/edit/:id", async (req, res) => {
+  const id = req.params.id;
+
+  await User.findOne({
+    raw: true,
+    where: {
+      id: id,
+    },
+  })
+    .then((user) => {
+      console.log(user);
+      res.render("useredit", { user });
+    })
+    .catch((err) => console.log(err));
+});
 
 // Criar tabelas e rodar o app
 conn
