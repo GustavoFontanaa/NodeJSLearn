@@ -1,9 +1,12 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
+const conn = require('./db/conn')
+
+const User = require('./models/User')
 
 const app = express()
 
-const conn = require('./db/conn')
+
 
 app.engine('handlebars', exphbs.engine())
 app.set('view engine', 'handlebars')
@@ -22,4 +25,10 @@ app.get('/', function (req, res) {
   res.render('home')
 })
 
-app.listen(3000)
+// Criar tabelas e rodar o app
+conn
+  .sync()
+  .then(() => {
+    app.listen(3000)
+  })
+  .catch((err) => console.log(err))
