@@ -1,0 +1,22 @@
+<h1>Cadastre o seu livro:</h1>
+<fieldset class="form-border">
+  <form action="" method="POST" class="form">
+    <div class="form-control">
+      <label for="title">Título</label>
+      <br />
+      <input type="text" name="title" placeholder="Digite o título" value="{{book.title}}" />
+    </div>
+    <div class="form-control">
+      <br />
+      <label for="pageqty">Número de páginas</label><br />
+      <input
+        type="number"
+        name="pageqty"
+        placeholder="Quantas páginas o livro tem?"
+        value="{{book.pageqty}}"
+      />
+    </div>
+    <br />
+    <input class="buttonClass" type="submit" value="Editar" />
+  </form>
+</fieldset>

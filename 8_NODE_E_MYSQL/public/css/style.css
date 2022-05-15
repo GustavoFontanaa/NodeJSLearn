@@ -187,3 +187,21 @@ nav li {
   margin-left: 30px;
 }
 
+.buttonClassEdit {
+  font-size: 20px;
+  color: #fff;
+  border-color: #18ab29;
+  font-weight: bold;
+  text-decoration: none;
+  background: #4834d4;
+}
+
+.actions {
+  margin-top: 10px;
+}
+
+.buttonClassEdit:hover {
+  background: #4934d4ec;
+}
+
+
