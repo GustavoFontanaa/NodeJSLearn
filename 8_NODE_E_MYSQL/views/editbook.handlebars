@@ -1,6 +1,7 @@
 <h1>Cadastre o seu livro:</h1>
 <fieldset class="form-border">
-  <form action="" method="POST" class="form">
+  <form action="/books/updatebook" method="POST" class="form">
+    <input type="hidden" name="id" value="{{book.id}}">
     <div class="form-control">
       <label for="title">Título</label>
       <br />
