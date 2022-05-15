@@ -149,6 +149,19 @@ app.post('/address/create', async (req, res) => {
   res.redirect(`/users/edit/${UserId}`)
 })
 
+app.post('/address/delete/', async (req, res) => {
+  const UserId = req.body.UserId
+  const id = req.body.id
+
+  await Address.destroy({
+    where: {
+      id: id,
+    },
+  })
+    .then(res.redirect(`/users/edit/${UserId}`))
+    .catch((err) => console.log(err))
+})
+
 // Criar tabelas e rodar o app
 conn
   .sync()
