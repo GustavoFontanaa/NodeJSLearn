@@ -1,3 +1,4 @@
+const { raw } = require("express");
 const Thought = require("../models/Thought");
 const User = require("../models/User");
 
@@ -26,8 +27,8 @@ module.exports = class ThoughtsController {
 
     let emptyThoughts = false;
 
-    if(thoughts.length === 0) {
-      emptyThoughts = true
+    if (thoughts.length === 0) {
+      emptyThoughts = true;
     }
 
     res.render("thoughts/dashboard", { thoughts, emptyThoughts });
@@ -71,5 +72,13 @@ module.exports = class ThoughtsController {
     } catch (error) {
       console.log("Aconteceu um erro: " + error);
     }
+  }
+
+  static async updateThought(req, res) {
+    const id = req.params.id;
+
+    const thought = await Thought.findOne({ where: { id: id }, raw: true });
+
+    res.render("thoughts/edit", { thought });
   }
 };
