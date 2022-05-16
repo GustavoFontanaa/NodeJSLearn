@@ -24,7 +24,13 @@ module.exports = class ThoughtsController {
 
     const thoughts = user.Thoughts.map((result) => result.dataValues);
 
-    res.render("thoughts/dashboard", { thoughts });
+    let emptyThoughts = false;
+
+    if(thoughts.length === 0) {
+      emptyThoughts = true
+    }
+
+    res.render("thoughts/dashboard", { thoughts, emptyThoughts });
   }
 
   static createThought(req, res) {
