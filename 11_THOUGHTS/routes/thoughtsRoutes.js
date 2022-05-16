@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const AuthController = require("../controllers/AuthController");
+const ThoughtController = require("../controllers/ThoughtsController");
 
-router.get("/login", AuthController.login);
-router.get("/register", AuthController.register);
+// helpers
+const checkAuth = require('../helpers/auth').checkAuth
+
+router.get("/dashboard", checkAuth, ThoughtController.dashboard);
+router.get("/", ThoughtController.showThoughts);
 
 module.exports = router;
