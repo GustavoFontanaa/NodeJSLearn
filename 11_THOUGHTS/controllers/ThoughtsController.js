@@ -24,7 +24,7 @@ module.exports = class ThoughtsController {
 
     const thoughts = user.Thoughts.map((result) => result.dataValues);
 
-    res.render("thoughts/dashboard", {thoughts});
+    res.render("thoughts/dashboard", { thoughts });
   }
 
   static createThought(req, res) {
@@ -41,6 +41,23 @@ module.exports = class ThoughtsController {
       await Thought.create(thought);
 
       req.flash("message", "Pensamento criado com sucesso!");
+
+      req.session.save(() => {
+        res.redirect("/thoughts/dashboard");
+      });
+    } catch (error) {
+      console.log("Aconteceu um erro: " + error);
+    }
+  }
+
+  static async removeThought(req, res) {
+    const id = req.body.id;
+    const UserId = req.session.userid;
+
+    try {
+      await Thought.destroy({ where: { id: id, UserId: UserId } });
+
+      req.flash("message", "Pensamento removido com sucesso!");
 
       req.session.save(() => {
         res.redirect("/thoughts/dashboard");
